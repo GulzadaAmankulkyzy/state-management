@@ -1,26 +1,10 @@
+import 'package:counter_getx/counter_getx/counter_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class CounterGetxPage extends StatefulWidget {
-  const CounterGetxPage({super.key});
-
-  @override
-  State<CounterGetxPage> createState() => _CounterGetxPageState();
-}
-
-class _CounterGetxPageState extends State<CounterGetxPage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  void _decrementCounter() {
-    setState(() {
-      _counter--;
-    });
-  }
+class CounterGetxPage extends StatelessWidget {
+  CounterGetxPage({super.key});
+  final controller = Get.put(CounterController());
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +12,7 @@ class _CounterGetxPageState extends State<CounterGetxPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('Getx'),
+        title: const Text('ProjectGetx'),
       ),
       body: Center(
         child: Column(
@@ -37,10 +21,13 @@ class _CounterGetxPageState extends State<CounterGetxPage> {
             const Text(
               'You have pushed the button this many times:',
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
+            Obx(() {
+              //print('Obx ishtedi');
+              return Text(
+                '${controller.count}',
+                style: Theme.of(context).textTheme.headlineMedium,
+              );
+            }),
           ],
         ),
       ),
@@ -48,13 +35,13 @@ class _CounterGetxPageState extends State<CounterGetxPage> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           FloatingActionButton(
-            onPressed: _incrementCounter,
+            onPressed: controller.increment,
             tooltip: 'Increment',
             child: const Icon(Icons.add),
           ),
           const SizedBox(height: 10),
           FloatingActionButton(
-            onPressed: _decrementCounter,
+            onPressed: controller.decrement,
             tooltip: 'Decrement', // Tooltipти да оңдоду
             child: const Icon(Icons.remove),
           ),
